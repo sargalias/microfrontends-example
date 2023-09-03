@@ -1,5 +1,16 @@
 import { faker } from '@faker-js/faker';
 
-const cartText = `<div>You have ${faker.number.int()} items in your cart.</div>`;
+const mount = (element) => {
+  const cartText = `<div>You have ${faker.number.int()} items in your cart.</div>`;
+  element.innerHTML = cartText;
+};
 
-document.querySelector('#cart-dev').innerHTML = cartText;
+if (
+  process.env.NODE_ENV === 'development' &&
+  document.body.getAttribute('data-app') === 'cart'
+) {
+  const element = document.querySelector('#cart-dev');
+  mount(element);
+}
+
+export { mount };
