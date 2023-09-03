@@ -1,15 +1,15 @@
 {
-  "name": "products",
+  "name": "container",
   "version": "1.0.0",
   "description": "",
-  "keywords": [],
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack",
     "start": "webpack serve"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
     "html-webpack-plugin": "^5.5.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
