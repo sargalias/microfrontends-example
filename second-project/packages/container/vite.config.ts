@@ -2,18 +2,21 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import federation from '@originjs/vite-plugin-federation';
 
+// https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    target: 'esnext',
+  },
   plugins: [
     federation({
-      name: 'marketing-app',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './MarketingApp': './src/Bootstrap',
+      name: 'host-app',
+      remotes: {
+        marketingApp: 'http://localhost:8081/assets/remoteEntry.js',
       },
     }),
     react(),
   ],
   server: {
-    port: 8081,
+    port: 8080,
   },
 });
