@@ -1,25 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import federation from '@originjs/vite-plugin-federation';
-// import packageJson from './package.json';
+import devConfig from './vite.config.dev';
+import prodConfig from './vite.config.prod';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  build: {
-    target: 'esnext',
-  },
-  plugins: [
-    react(),
-    federation({
-      name: 'host-app',
-      remotes: {
-        marketingApp: 'http://localhost:8081/assets/remoteEntry.js',
-      },
-      // not working due to vite issues
-      // shared: packageJson.dependencies,
-    }),
-  ],
-  server: {
-    port: 8080,
-  },
-});
+const config = process.env.NODE_ENV !== 'development' ? devConfig : prodConfig;
+
+export default config;
