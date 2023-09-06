@@ -8,7 +8,7 @@
     "dev": "vite",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "serve": "npm run build && live-server dist --port=8081 --cors"
+    "serve": "vite build --mode development && live-server dist --port=8081 --cors"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@originjs/vite-plugin-federation": "^1.2.3",
+    "@types/node": "^20.5.9",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

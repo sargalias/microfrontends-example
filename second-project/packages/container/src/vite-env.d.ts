@@ -1,4 +1,4 @@
 /// <reference types="vite/client" />
-declare module 'marketingApp/*' {
+declare module 'marketing/*' {
   export function mount(element: Element): void;
 }

@@ -1,7 +1,7 @@
-import { mount } from 'marketingApp/MarketingApp';
+import { mount } from 'marketing/Marketing';
 import { useRef, useEffect } from 'react';
 
-const MarketingApp = () => {
+const Marketing = () => {
   const ref = useRef(null);
   useEffect(() => {
     if (ref.current) {
@@ -12,4 +12,4 @@ const MarketingApp = () => {
   return <div ref={ref}></div>;
 };
 
-export default MarketingApp;
+export default Marketing;

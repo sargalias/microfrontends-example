@@ -1,6 +1,9 @@
+import { defineConfig } from 'vite';
 import devConfig from './vite.config.dev';
 import prodConfig from './vite.config.prod';
 
-const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
+const getConfig = ({ mode }) => {
+  return mode === 'production' ? prodConfig : devConfig;
+};
 
-export default config;
+export default defineConfig(getConfig);

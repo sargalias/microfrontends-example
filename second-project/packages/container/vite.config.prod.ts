@@ -1,4 +1,3 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import federation from '@originjs/vite-plugin-federation';
 // import packageJson from './package.json';
@@ -6,7 +5,7 @@ import federation from '@originjs/vite-plugin-federation';
 const domain = process.env.DOMAIN;
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default {
   base: '/container/latest/',
   build: {
     target: 'esnext',
@@ -16,7 +15,7 @@ export default defineConfig({
     federation({
       name: 'host-app',
       remotes: {
-        marketingApp: `${domain}/marketing/latest/remoteEntry.js`,
+        marketing: `${domain}/marketing/latest/assets/remoteEntry.js`,
       },
       // not working due to vite issues
       // shared: packageJson.dependencies,
@@ -25,4 +24,4 @@ export default defineConfig({
   server: {
     port: 8080,
   },
-});
+};

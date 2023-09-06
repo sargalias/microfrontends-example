@@ -2,7 +2,6 @@ import react from '@vitejs/plugin-react-swc';
 import federation from '@originjs/vite-plugin-federation';
 // import packageJson from './package.json';
 
-// https://vitejs.dev/config/
 export default {
   build: {
     target: 'esnext',
@@ -10,15 +9,16 @@ export default {
   plugins: [
     react(),
     federation({
-      name: 'host-app',
-      remotes: {
-        marketing: 'http://localhost:8081/assets/remoteEntry.js',
+      name: 'marketing-app',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Marketing': './src/Bootstrap',
       },
       // not working due to vite issues
       // shared: packageJson.dependencies,
     }),
   ],
   server: {
-    port: 8080,
+    port: 8081,
   },
 };
