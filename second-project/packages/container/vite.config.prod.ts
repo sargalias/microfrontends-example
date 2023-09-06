@@ -7,6 +7,7 @@ const domain = process.env.PRODUCTION_DOMAIN;
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/container/latest/',
   build: {
     target: 'esnext',
   },
