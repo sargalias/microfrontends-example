@@ -29,3 +29,5 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Sync files to S3
         run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+      - name: Invalidate files on Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/container/latest/index.html"
