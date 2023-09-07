@@ -1,23 +1,15 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 
 import theme from './mui/Theme';
-import Landing from './components/Landing';
-import Pricing from './components/Pricing';
+import router from './config/router';
 
-const router = createBrowserRouter([
-  {
-    path: '/pricing',
-    element: <Pricing />,
-  },
-  {
-    path: '/',
-    element: <Landing />,
-  },
-]);
+type AppProps = {
+  router: typeof router;
+};
 
-const App = () => {
+const App = ({ router }: AppProps) => {
   return (
     <div>
       <ThemeProvider theme={theme}>
