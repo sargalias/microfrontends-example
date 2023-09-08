@@ -1,23 +1,13 @@
 import { mount } from 'marketing/Marketing';
-import { useRef, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-type OnHostNavigate = (pathname: string) => void;
+import { useRef, useEffect } from 'react';
+import useOnRemoteNavigate from './useOnRemoteNavigate';
+import useOnHostNavigate from './useOnHostNavigate';
 
 const Marketing = () => {
   const ref = useRef(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [onHostNavigate, setOnHostNavigate] = useState<OnHostNavigate | null>(
-    null,
-  );
-  const [onRemoteNavigate] = useState(() => (nextPathname: string) => {
-    if (locationPathnameRef.current !== nextPathname) {
-      navigate(nextPathname);
-    }
-  });
-  const locationPathnameRef = useRef(location.pathname);
-  locationPathnameRef.current = location.pathname;
+
+  const [, setOnHostNavigate] = useOnHostNavigate();
+  const onRemoteNavigate = useOnRemoteNavigate();
 
   useEffect(() => {
     if (ref.current) {
@@ -25,12 +15,6 @@ const Marketing = () => {
       setOnHostNavigate(() => onHostNavigate);
     }
   }, []);
-
-  useEffect(() => {
-    if (onHostNavigate) {
-      onHostNavigate(location.pathname);
-    }
-  }, [onHostNavigate, location]);
 
   return <div ref={ref}></div>;
 };
