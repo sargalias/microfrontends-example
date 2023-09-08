@@ -3,10 +3,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 
 import theme from './mui/Theme';
-import router from './config/router';
 
 type AppProps = {
-  router: typeof router;
+  router: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
 const App = ({ router }: AppProps) => {

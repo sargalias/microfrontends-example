@@ -6,14 +6,19 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import App from './App';
-import router from './config/router';
+import createRouter from './config/router';
 
 type MountOptions = {
   onRemoteNavigate: (pathname: string) => void;
+  routerType?: 'memory' | 'browser';
 };
 type Mount = (element: Element, options: MountOptions) => void;
 
-const mount: Mount = (element: Element, { onRemoteNavigate }) => {
+const mount: Mount = (
+  element: Element,
+  { onRemoteNavigate, routerType = 'memory' },
+) => {
+  const router = createRouter(routerType);
   // Bug: There is an issue because the subscribe notification
   // is triggered twice for each route change.
   router.subscribe((routerState) => {
@@ -40,7 +45,7 @@ const main = () => {
     document.body.getAttribute('data-app') === 'marketing'
   ) {
     const element = document.querySelector('#root') as Element;
-    mount(element, { onRemoteNavigate: () => {} });
+    mount(element, { onRemoteNavigate: () => {}, routerType: 'browser' });
   }
 };
 main();
