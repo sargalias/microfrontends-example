@@ -2,11 +2,11 @@ import { RouterProvider } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 
-import theme from './mui/Theme';
-import router from './config/router';
+import theme from '../mui/Theme';
 
 type AppProps = {
-  router: typeof router;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  router: any;
 };
 
 const App = ({ router }: AppProps) => {

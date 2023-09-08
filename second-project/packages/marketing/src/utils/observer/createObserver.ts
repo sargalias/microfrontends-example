@@ -1,9 +1,9 @@
 type Observer<T> = (data: T) => void;
 
-const observer = <T>() => {
+const createObserver = <T>() => {
   const observers = new Set<Observer<T>>();
 
-  const subscribe = (observer: Observer<T>) => {
+  const subscribe = (observer: Observer<T>): (() => void) => {
     observers.add(observer);
 
     const unsubscribe = () => {
@@ -21,4 +21,4 @@ const observer = <T>() => {
   return { subscribe, notify };
 };
 
-export default observer;
+export default createObserver;
