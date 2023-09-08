@@ -9,22 +9,29 @@ import App from './App';
 import router from './config/router';
 
 type MountOptions = {
-  onNavigate: (pathname: string) => void;
+  onRemoteNavigate: (pathname: string) => void;
 };
 type Mount = (element: Element, options: MountOptions) => void;
 
-const mount: Mount = (element: Element, { onNavigate }) => {
+const mount: Mount = (element: Element, { onRemoteNavigate }) => {
   // Bug: There is an issue because the subscribe notification
   // is triggered twice for each route change.
   router.subscribe((routerState) => {
-    onNavigate(routerState.location.pathname);
+    onRemoteNavigate(routerState.location.pathname);
   });
+  const onHostNavigate = (nextPathname: string) => {
+    if (router.state.location.pathname !== nextPathname) {
+      router.navigate(nextPathname);
+    }
+  };
 
   ReactDOM.createRoot(element).render(
     <React.StrictMode>
       <App router={router} />
     </React.StrictMode>,
   );
+
+  return { onHostNavigate };
 };
 
 const main = () => {
@@ -33,7 +40,7 @@ const main = () => {
     document.body.getAttribute('data-app') === 'marketing'
   ) {
     const element = document.querySelector('#root') as Element;
-    mount(element, { onNavigate: () => {} });
+    mount(element, { onRemoteNavigate: () => {} });
   }
 };
 main();
