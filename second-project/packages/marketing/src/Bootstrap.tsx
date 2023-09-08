@@ -5,20 +5,19 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import App from './config/App';
-import createRouter from './config/createRouter';
-import createObserver from './utils/observer';
+import App from './App';
+import router from './config/router';
 
 type MountOptions = {
-  onRemoteNavigate: (pathname: string) => void;
+  onNavigate: (pathname: string) => void;
 };
 type Mount = (element: Element, options: MountOptions) => void;
 
-const mount: Mount = (element: Element, { onRemoteNavigate }) => {
-  const observer = createObserver();
-  const router = createRouter({
-    hostNavigateObserverSubscribe: observer.subscribe,
-    onRemoteNavigate,
+const mount: Mount = (element: Element, { onNavigate }) => {
+  // Bug: There is an issue because the subscribe notification
+  // is triggered twice for each route change.
+  router.subscribe((routerState) => {
+    onNavigate(routerState.location.pathname);
   });
 
   ReactDOM.createRoot(element).render(
@@ -26,7 +25,6 @@ const mount: Mount = (element: Element, { onRemoteNavigate }) => {
       <App router={router} />
     </React.StrictMode>,
   );
-  return { onHostNavigate: observer.notify };
 };
 
 const main = () => {
@@ -35,7 +33,7 @@ const main = () => {
     document.body.getAttribute('data-app') === 'marketing'
   ) {
     const element = document.querySelector('#root') as Element;
-    mount(element, { onRemoteNavigate: console.log });
+    mount(element, { onNavigate: () => {} });
   }
 };
 main();
