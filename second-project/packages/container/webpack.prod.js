@@ -1,11 +1,11 @@
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 import commonConfig from './webpack.common.js';
-import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
+// import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 
 const domain = process.env.DOMAIN;
 const { ModuleFederationPlugin } = webpack.container;
-const BundleAnalyzerPlugin = WebpackBundleAnalyzer.BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = WebpackBundleAnalyzer.BundleAnalyzerPlugin;
 
 const prodConfig = merge(commonConfig, {
   mode: 'production',
@@ -14,7 +14,7 @@ const prodConfig = merge(commonConfig, {
     filename: '[name].[contenthash].js',
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new ModuleFederationPlugin({
       name: 'host-app',
       remotes: {
