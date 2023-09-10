@@ -1,15 +1,15 @@
-name: deploy-marketing
+name: deploy-auth
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'second-project/packages/marketing/**'
+      - 'second-project/packages/auth/**'
 
 defaults:
   run:
-    working-directory: second-project/packages/marketing
+    working-directory: second-project/packages/auth
 
 permissions:
   id-token: write
@@ -30,6 +30,6 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Sync files to S3
-        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
-      - name: Invalidate marketing remoteEntry.js file in Cloudfront
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/marketing/latest/remoteEntry.js"
+        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/auth/latest
+      - name: Invalidate auth remoteEntry.js file in Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/auth/latest/remoteEntry.js"
