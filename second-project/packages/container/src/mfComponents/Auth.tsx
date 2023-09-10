@@ -1,16 +1,19 @@
 import { useEffect, useRef } from 'react';
-import { mount } from 'auth/AuthApp';
+import { mount } from 'auth/auth';
+
+console.log(mount);
 
 const Auth = () => {
   const ref = useRef(null);
 
-  console.log(mount);
+  useEffect(() => {
+    console.log('in useEffect');
+    if (ref.current) {
+      mount(ref.current, { onRemoteNavigate: () => {} });
+    }
+  }, []);
 
-  // useEffect(() => {
-  // mount(ref.current);
-  // }, []);
-
-  return <div ref={ref}>AUTH</div>;
+  return <div ref={ref}>AUTH from container</div>;
 };
 
 export default Auth;

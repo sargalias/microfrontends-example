@@ -1,4 +1,4 @@
-import { mount } from 'marketing/Marketing';
+import { mount } from 'marketing/marketing';
 import { useRef, useEffect } from 'react';
 import useOnRemoteNavigate from './useOnRemoteNavigate';
 import useOnHostNavigate from './useOnHostNavigate';

@@ -43,8 +43,10 @@ const mount = (
 };
 
 const main = () => {
-  const element = document.querySelector('#root') as Element;
-  mount(element, { routerType: 'browser', onRemoteNavigate: () => {} });
+  if (document.body.getAttribute('data-app-name') === 'auth') {
+    const element = document.querySelector('#root') as Element;
+    mount(element, { routerType: 'browser', onRemoteNavigate: () => {} });
+  }
 };
 
 main();

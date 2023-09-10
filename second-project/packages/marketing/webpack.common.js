@@ -35,10 +35,10 @@ const commonConfig = {
   plugins: [
     new HtmlWebpackPlugin({ template: 'src/index.html' }),
     new ModuleFederationPlugin({
-      name: 'auth',
+      name: 'marketing',
       filename: 'remoteEntry.js',
       exposes: {
-        './auth': './src/Bootstrap',
+        './marketing': './src/Bootstrap',
       },
     }),
   ],

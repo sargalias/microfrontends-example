@@ -40,10 +40,7 @@ const mount: Mount = (
 };
 
 const main = () => {
-  if (
-    import.meta.env.MODE === 'development' &&
-    document.body.getAttribute('data-app') === 'marketing'
-  ) {
+  if (document.body.getAttribute('data-app') === 'marketing') {
     const element = document.querySelector('#root') as Element;
     mount(element, { onRemoteNavigate: () => {}, routerType: 'browser' });
   }

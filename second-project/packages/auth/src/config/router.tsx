@@ -7,6 +7,10 @@ const createRouter = (routerType: 'browser' | 'memory') => {
     routerType === 'browser' ? createBrowserRouter : createMemoryRouter;
   return browserCreateFn([
     {
+      path: '/',
+      element: <h1>Auth</h1>,
+    },
+    {
       path: '/auth/signin',
       element: <SignIn />,
     },

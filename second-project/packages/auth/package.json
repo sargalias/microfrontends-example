@@ -2,7 +2,7 @@
   "name": "auth",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
