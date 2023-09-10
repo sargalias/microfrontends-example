@@ -6,7 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const commonConfig = {
   devtool: 'inline-source-map',
-  entry: './src/index.tsx',
+  entry: './src/index.ts',
   module: {
     rules: [
       {
