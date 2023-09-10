@@ -1,6 +1,8 @@
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from 'webpack';
+const { ModuleFederationPlugin } = webpack.container;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -30,7 +32,14 @@ const commonConfig = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+    new ModuleFederationPlugin({
+      name: 'AuthApp',
+      filename: 'remoteEntry.js',
+      exposes: ['./src/Bootstrap'],
+    }),
+  ],
   resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
 };
 
