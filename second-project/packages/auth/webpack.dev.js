@@ -9,6 +9,9 @@ const devConfig = merge(commonConfig, {
   devServer: {
     port: 8082,
     historyApiFallback: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 });
 

@@ -16,6 +16,7 @@ export default {
       name: 'host-app',
       remotes: {
         marketing: `${domain}/marketing/latest/assets/remoteEntry.js`,
+        auth: 'http://localhost:8082/remoteEntry.js',
       },
       // not working due to vite issues
       // shared: packageJson.dependencies,
