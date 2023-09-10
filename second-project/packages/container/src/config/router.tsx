@@ -1,17 +1,20 @@
-import Marketing from '../mfComponents/Marketing';
-import Header from '../components/Header';
 import { createBrowserRouter } from 'react-router-dom';
-import Auth from '../mfComponents/Auth';
+import AuthApp from '../mfComponents/AuthApp';
+import MarketingApp from '../mfComponents/MarketingApp';
+import Root from './Root';
 
 export const router = createBrowserRouter([
   {
-    path: '*',
-    element: (
-      <>
-        <Header signedIn={false} onSignOut={() => {}} />
-        <Auth />
-        <Marketing />
-      </>
-    ),
+    element: <Root />,
+    children: [
+      {
+        path: '/auth/*',
+        element: <AuthApp />,
+      },
+      {
+        path: '/',
+        element: <MarketingApp />,
+      },
+    ],
   },
 ]);

@@ -11,6 +11,7 @@ import createRouter from './config/router';
 type MountOptions = {
   routerType: 'browser' | 'memory';
   onRemoteNavigate: (nextPathname: string) => void;
+  initialPath?: string;
 };
 
 type MountReturnValue = {
@@ -19,9 +20,13 @@ type MountReturnValue = {
 
 const mount = (
   element: Element,
-  { routerType, onRemoteNavigate }: MountOptions,
+  { routerType, onRemoteNavigate, initialPath }: MountOptions,
 ): MountReturnValue => {
   const router = createRouter(routerType);
+
+  if (initialPath) {
+    router.navigate(initialPath);
+  }
 
   router.subscribe((routerState) => {
     onRemoteNavigate(routerState.location.pathname);

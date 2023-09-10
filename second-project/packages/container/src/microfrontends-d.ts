@@ -3,6 +3,7 @@ declare module 'authApp/*' {
     element: Element,
     options: {
       onRemoteNavigate: (pathname: string) => void;
+      initialPath?: string;
     },
   ): { onHostNavigate: (pathname: string) => void };
 }
@@ -12,6 +13,7 @@ declare module 'marketingApp/*' {
     element: Element,
     options: {
       onRemoteNavigate: (pathname: string) => void;
+      initialPath?: string;
     },
   ): { onHostNavigate: (pathname: string) => void };
 }

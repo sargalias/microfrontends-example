@@ -7,7 +7,7 @@ const createRouter = (routerType: 'browser' | 'memory') => {
     routerType === 'browser' ? createBrowserRouter : createMemoryRouter;
   return browserCreateFn([
     {
-      path: '/',
+      path: '/auth',
       element: <h1>Auth</h1>,
     },
     {

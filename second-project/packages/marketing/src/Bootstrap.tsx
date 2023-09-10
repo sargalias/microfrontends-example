@@ -11,14 +11,20 @@ import createRouter from './config/router';
 type MountOptions = {
   onRemoteNavigate: (pathname: string) => void;
   routerType?: 'memory' | 'browser';
+  initialPath?: string;
 };
 type Mount = (element: Element, options: MountOptions) => void;
 
 const mount: Mount = (
   element: Element,
-  { onRemoteNavigate, routerType = 'memory' },
+  { onRemoteNavigate, routerType = 'memory', initialPath },
 ) => {
   const router = createRouter(routerType);
+
+  if (initialPath) {
+    router.navigate(initialPath);
+  }
+
   // Bug: There is an issue because the subscribe notification
   // is triggered twice for each route change.
   router.subscribe((routerState) => {
