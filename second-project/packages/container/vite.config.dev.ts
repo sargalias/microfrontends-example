@@ -4,6 +4,7 @@ import federation from '@originjs/vite-plugin-federation';
 
 // https://vitejs.dev/config/
 export default {
+  base: 'http://localhost:8080',
   build: {
     target: 'esnext',
   },

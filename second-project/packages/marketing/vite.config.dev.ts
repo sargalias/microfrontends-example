@@ -3,6 +3,7 @@ import federation from '@originjs/vite-plugin-federation';
 // import packageJson from './package.json';
 
 export default {
+  base: 'http://localhost:8081/',
   build: {
     target: 'esnext',
   },
