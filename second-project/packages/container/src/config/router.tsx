@@ -1,7 +1,9 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import AuthApp from '../mfComponents/AuthApp';
-import MarketingApp from '../mfComponents/MarketingApp';
 import Root from './Root';
+
+const MarketingApp = lazy(() => import('../mfComponents/MarketingApp'));
+const AuthApp = lazy(() => import('../mfComponents/AuthApp'));
 
 export const router = createBrowserRouter([
   {
@@ -9,11 +11,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/auth/*',
-        element: <AuthApp />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AuthApp />
+          </Suspense>
+        ),
       },
       {
         path: '/',
-        element: <MarketingApp />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <MarketingApp />
+          </Suspense>
+        ),
       },
     ],
   },
