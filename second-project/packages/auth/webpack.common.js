@@ -5,14 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const commonConfig = {
-  entry: './src/index.tsx',
-  output: {
-    clean: true,
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
   devtool: 'inline-source-map',
-  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
@@ -31,7 +25,13 @@ const commonConfig = {
       },
     ],
   },
+  output: {
+    clean: true,
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
   plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })],
+  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
 };
 
 export default commonConfig;
