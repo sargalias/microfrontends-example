@@ -5,6 +5,7 @@ const prodConfig = merge(commonConfig, {
   mode: 'production',
   output: {
     publicPath: '/auth/latest',
+    filename: '[name].[contenthash].js',
   },
 });
 
