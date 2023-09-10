@@ -6,7 +6,7 @@ import commonConfig from './webpack.common.js';
 const prodConfig = merge(commonConfig, {
   mode: 'production',
   output: {
-    publicPath: '/marketing/latest',
+    publicPath: '/marketing/latest/',
     filename: '[name].[contenthash].js',
   },
   // plugins: [new BundleAnalyzerPlugin()],

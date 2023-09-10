@@ -6,7 +6,7 @@ import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 const prodConfig = merge(commonConfig, {
   mode: 'production',
   output: {
-    publicPath: '/auth/latest',
+    publicPath: '/auth/latest/',
     filename: '[name].[contenthash].js',
   },
   // plugins: [new BundleAnalyzerPlugin()],

@@ -4,13 +4,14 @@ import commonConfig from './webpack.common.js';
 // import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 
 const domain = process.env.DOMAIN;
+
 const { ModuleFederationPlugin } = webpack.container;
 // const BundleAnalyzerPlugin = WebpackBundleAnalyzer.BundleAnalyzerPlugin;
 
 const prodConfig = merge(commonConfig, {
   mode: 'production',
   output: {
-    publicPath: '/auth/latest',
+    publicPath: '/container/latest/',
     filename: '[name].[contenthash].js',
   },
   plugins: [
@@ -18,8 +19,8 @@ const prodConfig = merge(commonConfig, {
     new ModuleFederationPlugin({
       name: 'host-app',
       remotes: {
-        auth: `AuthApp@${domain}/auth/latest/remoteEntry.js`,
-        marketing: `Marketing@${domain}/marketing/latest/assets/remoteEntry.js`,
+        auth: `auth@${domain}/auth/latest/remoteEntry.js`,
+        marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,
       },
     }),
   ],
