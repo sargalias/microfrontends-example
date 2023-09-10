@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "webpack serve --config webpack.dev.js",
+    "dev": "webpack serve --config webpack.dev.js --env development",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

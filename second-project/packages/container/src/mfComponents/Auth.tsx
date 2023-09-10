@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { mount } from 'auth/auth';
-
-console.log(mount);
+import { mount } from 'authApp/index';
 
 const Auth = () => {
   const ref = useRef(null);
@@ -17,5 +15,3 @@ const Auth = () => {
 };
 
 export default Auth;
-
-// export default () => null;
