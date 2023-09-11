@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { useUser } from '../UserContext';
 
 const Toolbar = styled('div')(() => ({
   display: 'flex',
@@ -12,13 +13,14 @@ const Toolbar = styled('div')(() => ({
 }));
 
 type HeaderProps = {
-  signedIn: boolean;
   onSignOut: () => void;
 };
 
-const Header = ({ signedIn, onSignOut }: HeaderProps) => {
+const Header = ({ onSignOut }: HeaderProps) => {
+  const { isSignedIn } = useUser();
+
   const onClick = () => {
-    if (signedIn && onSignOut) {
+    if (isSignedIn && onSignOut) {
       onSignOut();
     }
   };
@@ -39,10 +41,10 @@ const Header = ({ signedIn, onSignOut }: HeaderProps) => {
         <Button
           color="primary"
           variant="outlined"
-          href={signedIn ? '/' : '/auth/signin'}
+          href={isSignedIn ? '/' : '/auth/signin'}
           onClick={onClick}
         >
-          {signedIn ? 'Logout' : 'Login'}
+          {isSignedIn ? 'Logout' : 'Login'}
         </Button>
       </Toolbar>
     </AppBar>
