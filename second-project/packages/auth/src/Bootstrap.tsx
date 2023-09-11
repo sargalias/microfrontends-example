@@ -12,6 +12,7 @@ type MountOptions = {
   routerType: 'browser' | 'memory';
   onRemoteNavigate: (nextPathname: string) => void;
   initialPath?: string;
+  onSignIn: () => void;
 };
 
 type MountReturnValue = {
@@ -20,9 +21,9 @@ type MountReturnValue = {
 
 const mount = (
   element: Element,
-  { routerType, onRemoteNavigate, initialPath }: MountOptions,
+  { routerType, onRemoteNavigate, initialPath, onSignIn }: MountOptions,
 ): MountReturnValue => {
-  const router = createRouter(routerType);
+  const router = createRouter(routerType, onSignIn);
 
   if (initialPath) {
     router.navigate(initialPath);
@@ -50,7 +51,11 @@ const mount = (
 const main = () => {
   if (document.body.getAttribute('data-app-name') === 'auth') {
     const element = document.querySelector('#root') as Element;
-    mount(element, { routerType: 'browser', onRemoteNavigate: () => {} });
+    mount(element, {
+      routerType: 'browser',
+      onRemoteNavigate: () => {},
+      onSignIn: () => {},
+    });
   }
 };
 

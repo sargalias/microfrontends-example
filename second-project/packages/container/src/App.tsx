@@ -5,12 +5,15 @@ import theme from './config/mui/Theme';
 
 import { RouterProvider } from 'react-router-dom';
 import { router } from './config/router';
+import { UserProvider } from './UserContext/UserContext';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
-        <RouterProvider router={router} />
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
       </CssBaseline>
     </ThemeProvider>
   );

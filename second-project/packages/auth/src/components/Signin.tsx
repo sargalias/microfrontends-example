@@ -23,7 +23,7 @@ const Form = styled('form')(({ theme }) => ({
   width: '100%',
 }));
 
-const SignIn = ({ onSignIn }) => {
+const SignIn = ({ onSignIn }: { onSignIn: () => void }) => {
   return (
     <Container component="main" maxWidth="xs">
       <Paper>

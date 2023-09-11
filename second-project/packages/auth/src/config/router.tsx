@@ -2,7 +2,10 @@ import { createBrowserRouter, createMemoryRouter } from 'react-router-dom';
 import SignIn from '../components/Signin';
 import SignUp from '../components/Signup';
 
-const createRouter = (routerType: 'browser' | 'memory') => {
+const createRouter = (
+  routerType: 'browser' | 'memory',
+  onSignIn: () => void,
+) => {
   const browserCreateFn =
     routerType === 'browser' ? createBrowserRouter : createMemoryRouter;
   return browserCreateFn([
@@ -12,11 +15,11 @@ const createRouter = (routerType: 'browser' | 'memory') => {
     },
     {
       path: '/auth/signin',
-      element: <SignIn />,
+      element: <SignIn onSignIn={onSignIn} />,
     },
     {
       path: '/auth/signup',
-      element: <SignUp />,
+      element: <SignUp onSignIn={onSignIn} />,
     },
   ]);
 };

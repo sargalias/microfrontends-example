@@ -4,6 +4,7 @@ declare module 'authApp/*' {
     options: {
       onRemoteNavigate: (pathname: string) => void;
       initialPath?: string;
+      onSignIn: () => void;
     },
   ): { onHostNavigate: (pathname: string) => void };
 }

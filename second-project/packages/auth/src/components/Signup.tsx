@@ -33,7 +33,7 @@ const Form = styled('form')(({ theme }) => ({
   marginTop: theme.spacing(3),
 }));
 
-export default function SignUp({ onSignIn }) {
+export default function SignUp({ onSignIn }: { onSignIn: () => void }) {
   return (
     <Container component="main" maxWidth="xs">
       <Paper>
