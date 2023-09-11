@@ -12,16 +12,12 @@ const Toolbar = styled('div')(() => ({
   padding: '1rem',
 }));
 
-type HeaderProps = {
-  onSignOut: () => void;
-};
-
-const Header = ({ onSignOut }: HeaderProps) => {
-  const { isSignedIn } = useUser();
+const Header = () => {
+  const { isSignedIn, setIsSignedIn } = useUser();
 
   const onClick = () => {
-    if (isSignedIn && onSignOut) {
-      onSignOut();
+    if (isSignedIn) {
+      setIsSignedIn(false);
     }
   };
 
