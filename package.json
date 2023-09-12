@@ -2,5 +2,14 @@
   "name": "microfrontends-example",
   "workspaces": [
     "./packages/*"
-  ]
+  ],
+  "scripts": {
+    "dev-auth": "cd packages/auth && npm run dev",
+    "dev-container": "cd packages/container && npm run dev",
+    "dev-marketing": "cd packages/marketing && npm run dev",
+    "dev-all": "concurrently \"npm run dev-auth\" \"npm run dev-container\" \"npm run dev-marketing\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
 }
