@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'second-project/packages/auth/**'
+      - 'packages/auth/**'
 
 defaults:
   run:
-    working-directory: second-project/packages/auth
+    working-directory: packages/auth
 
 permissions:
   id-token: write

@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'second-project/packages/marketing/**'
+      - 'packages/marketing/**'
 
 defaults:
   run:
-    working-directory: second-project/packages/marketing
+    working-directory: packages/marketing
 
 permissions:
   id-token: write

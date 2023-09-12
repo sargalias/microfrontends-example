@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'second-project/packages/container/**'
+      - 'packages/container/**'
 
 defaults:
   run:
-    working-directory: second-project/packages/container
+    working-directory: packages/container
 
 permissions:
   id-token: write
