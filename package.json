@@ -1,0 +1,6 @@
+{
+  "name": "microfrontends-example",
+  "workspaces": [
+    "./packages/*"
+  ]
+}
