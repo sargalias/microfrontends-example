@@ -1,0 +1,99 @@
+on:
+  workflow_call:
+    inputs:
+      WORKING_DIRECTORY:
+        required: true
+        type: string
+      APP_DEPLOY_DIRECTORY:
+        required: true
+        type: string
+      INVALIDATION_PATH:
+        required: true
+        type: string
+    secrets:
+      DOMAIN:
+        required: true
+      AWS_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
+
+permissions:
+  id-token: write
+
+jobs:
+  infra:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ secrets.AWS_REGION }}
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      - run: terraform init -backend-config="./config.s3.tfbackend"
+      - run: terraform plan
+      - run: terraform validate
+      - run: terraform apply -auto-approve
+      - id: s3_bucket_name_output
+        run: echo "s3_bucket_name=$( terraform output -raw s3_bucket_name )" >> "$GITHUB_OUTPUT"
+      - id: cloudfront_distribution_id_output
+        run: echo "cloudfront_distribution_id=$( terraform output -raw cloudfront_distribution_id )" >> "$GITHUB_OUTPUT"
+    outputs:
+      s3_bucket_name: ${{ steps.s3_bucket_name_output.outputs.s3_bucket_name }}
+      cloudfront_distribution_id: ${{ steps.cloudfront_distribution_id_output.outputs.cloudfront_distribution_id }}
+
+  build:
+    needs:
+      - infra
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.WORKING_DIRECTORY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
+      - run: npm ci
+      - run: npm run build
+        env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: ${{ inputs.WORKING_DIRECTORY }}/dist
+          if-no-files-found: error
+
+  deploy:
+    needs:
+      - infra
+      - build
+    runs-on: ubuntu-latest
+    env:
+      s3_bucket_name: ${{needs.infra.outputs.s3_bucket_name}}
+      cloudfront_distribution_id: ${{needs.infra.outputs.cloudfront_distribution_id}}
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+          path: ./dist
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Sync files to S3
+        run: aws s3 sync dist s3://$s3_bucket_name${{ inputs.APP_DEPLOY_DIRECTORY }}
+      - name: Invalidate marketing remoteEntry.js file in Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id $cloudfront_distribution_id --paths "${{ inputs.INVALIDATION_PATH }}"

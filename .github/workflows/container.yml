@@ -6,30 +6,19 @@ on:
       - main
     paths:
       - 'packages/container/**'
-
-defaults:
-  run:
-    working-directory: packages/container
+  workflow_dispatch:
 
 permissions:
   id-token: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: npm ci
-      - run: npm run build
-        env:
-          DOMAIN: ${{ secrets.DOMAIN }}
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Sync files to S3
-        run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
-      - name: Invalidate index.html in Cloudfront
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/container/latest/index.html"
+  reusableWorkflowMicrofrontendDeploy:
+    uses: sargalias/microfrontends-example/.github/workflows/microfrontendDeploy.yml@main
+    with:
+      WORKING_DIRECTORY: packages/container
+      APP_DEPLOY_DIRECTORY: /container/latest
+      INVALIDATION_PATH: /container/latest/index.html
+    secrets:
+      DOMAIN: ${{ secrets.DOMAIN }}
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
