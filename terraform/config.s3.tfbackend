@@ -1,0 +1,3 @@
+bucket         = "sargalias-microfrontends-example-tfstate"
+key            = "terraform.tfstate"
+dynamodb_table = "microfrontends_example_terraform_locks"
